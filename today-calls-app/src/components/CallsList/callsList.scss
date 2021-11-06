@@ -1,0 +1,99 @@
+.calls-list {
+  width: 100%;
+
+  &__table {
+    width: 100%;
+  }
+
+  &__headers {
+    width: 100%;
+    display: flex;
+    background: #2c5f91;
+
+    .calls-list__col {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+  }
+
+  &__sort-block {
+    width: 15px;
+    padding: 0 20px 0 10px;
+  }
+  &__sort-block-up, &__sort-block-down {
+    cursor: pointer;
+  }
+  &__sort-block-up {
+    border: 7px solid transparent; border-bottom: 7px solid #fff;
+    margin-bottom: 4px;
+  }
+  &__sort-block-down {
+    border: 7px solid transparent; border-top: 7px solid #fff;
+  }
+
+  &__item {
+    display: flex;
+    width: 100%;
+
+    &:nth-child(even) {
+      background: #0c2a4d;
+    }
+
+    &:nth-child(odd) {
+      background: #0e3869;
+    }
+  }
+
+  &__col {
+    padding: 11px 7px 11px 11px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 16px;
+
+    &:not(:last-child) {
+      border-right: 1px solid #fff;
+    }
+  }
+
+  .name-col {
+    width: 30%;
+  }
+
+  .phone-col {
+    width: 30%;
+  }
+
+  .time-col {
+    width: 16%;
+  }
+
+  .time-delete {
+    width: 17%;
+
+    span {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .time-finish {
+    width: 7%;
+  }
+
+  &__buttons-wrap {
+    padding: 40px 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+}
