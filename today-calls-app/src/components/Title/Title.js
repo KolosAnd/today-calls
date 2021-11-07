@@ -1,10 +1,10 @@
-import "./title.scss"
+import mainClass from "./Title.module.css"
 import React from "react";
 
 export const Title = (props) => {
     return (
-        <div className="title">
-            <h2 className="title__name">{props.text}</h2>
+        <div className={mainClass.title}>
+            <h2 className={`${mainClass.title__name} ${props.classes}`}>{props.text}</h2>
         </div>
     )
 }

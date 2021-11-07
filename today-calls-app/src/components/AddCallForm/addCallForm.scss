@@ -4,6 +4,9 @@
   border: 2px solid #fac863;
   width: 100%;
   margin-bottom: 30px;
+  @media screen and (max-width: 500px) {
+    padding: 20px 15px;
+  }
 
   &__title {
     color: #fff;
@@ -15,7 +18,11 @@
 
   &__inputs-wrap {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 25px;
+    @media screen and (max-width: 500px) {
+      margin-bottom: 10px;
+    }
   }
 
   &__input {
@@ -34,6 +41,11 @@
 
     &:not(:last-child) {
       margin-right: 10px;
+    }
+    @media screen and (max-width: 1200px) {
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
     }
   }
 

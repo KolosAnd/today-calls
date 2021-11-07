@@ -1,9 +1,8 @@
-import "./button.scss"
+import mainClass from "./Button.module.css"
 import React from "react";
 
 export const Button = (props) => {
-    const classes = `button ${props.classes}`
     return (
-         <button onClick={props.click} type={props.type} className={classes}>{props.text}</button>
+         <button onClick={props.click} type={props.type} className={`${mainClass.button} ${props.classes}`}>{props.text}</button>
     )
 }

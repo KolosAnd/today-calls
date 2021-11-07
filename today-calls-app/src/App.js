@@ -1,33 +1,60 @@
 import './styles/global.scss'
-import {Title} from "./components/Title/Title";
-import {Button} from "./components/Button/Button";
 import {AddCallForm} from "./components/AddCallForm/AddCallForm";
 import {CallsList} from "./components/CallsList/CallsList";
+import {Storage} from "./storage";
+import React, { useState} from "react";
+import "./components/AddCallForm/addCallForm.scss";
+import Header from "./components/Header/Header";
+import NextCall from "./components/NextCall/NextCall";
+
 
 function App() {
+    const {getItemsFromStorage, deleteItemsFromStorage} = Storage();
+    const getCalls = () => {
+        return  getItemsFromStorage();
+    }
+    const [calls, setCalls] = useState(() => {
+      return getCalls();
+    });
+
+    const [filter, setFilter] = useState('all');
+
+    const createCall = (newCall) => {
+        setCalls([...calls, newCall])
+    }
+    const removeCalls = (call) => {
+        setCalls(calls.filter(c => c.id !== call.id));
+        deleteItemsFromStorage(call.milisec);
+    }
+
+    //по возростанию
+    const sortTimeAscending = () => {
+        setCalls( (prev) => {
+          return prev.sort((a, b) =>  (a.milisec - b.milisec) );
+        });
+    }
+    //по убиванию
+    const sortTimeDescending = () => {
+        setCalls( (prev) =>{
+          return prev.sort((a, b) => (b.milisec - a.milisec));
+        });
+    }
+
+
     return (
         <div className="App">
-            <header className="header">
-                <div className="container header__container">
-                    <Title text={"Today calls app"} />
-                </div>
-            </header>
+           <Header />
             <div className="container">
                 <div className="main-wrap">
-                    <div className="next-call">
-                        <div className="next-call__wrap">
-                            <Title text={"Next call"} />
-                            <div className="next-call__inputs-wrap">
-                                <div className="next-call__input name">User 1</div>
-                                <div className="next-call__input phone">032984234234</div>
-                                <div className="next-call__input time"> 4:20</div>
-                            </div>
-                        </div>
-                    </div>
+                    <NextCall />
                     <div className="calls-wrap">
-                        <AddCallForm />
+                        <AddCallForm create={createCall}/>
 
-                        <CallsList />
+                        <CallsList
+                            remove={removeCalls} calls={calls}
+                            sortTimeAsc={sortTimeAscending}
+                            sortTimeDesc={sortTimeDescending}
+                        />
                     </div>
 
                 </div>

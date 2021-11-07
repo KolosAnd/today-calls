@@ -1,25 +1,29 @@
 import React, {useCallback} from "react";
-import {TimeFunc} from "./timeFunc";
 
 export const Storage = () => {
-    const addItemToStorage = useCallback((name,phone,time, now) => {
-        const timeInMilisec = TimeFunc(time, now);
-        let finish = false;
-        if(Date.now() > timeInMilisec)  finish = true;
+    const addItemToStorage = useCallback((name,phone,time, timeInMilisec,finish) => {
         let data = {'id': Date.now(), 'name': name, 'phone': phone, 'time': time, 'milisec': timeInMilisec, 'finish': finish }
-        localStorage.setItem(`call ${Date.now()}`, JSON.stringify(data));
+        localStorage.setItem(`${timeInMilisec}`, JSON.stringify(data));
     },[]);
-    const getItems = useCallback( () => {
+
+    const getItemsFromStorage = useCallback( () => {
         let calls = [];
+        let callsObjects = [];
         for(let key in localStorage) {
             if (!localStorage.hasOwnProperty(key)) {
-                continue; // пропустит такие ключи, как "setItem", "getItem" и так далее
+                continue;
             }
             calls.push(localStorage.getItem(key));
+            calls.forEach( oneCall => {
+                callsObjects.push(JSON.parse(oneCall));
+            });
         }
-        // console.log(calls);
-        return calls;
-    }, [])
+        return callsObjects;
+    }, []);
 
-    return {addItemToStorage, getItems}
+    const deleteItemsFromStorage = useCallback( (key) => {
+        localStorage.removeItem(key);
+    }, []);
+
+    return {addItemToStorage, getItemsFromStorage, deleteItemsFromStorage}
 }

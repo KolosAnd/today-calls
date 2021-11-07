@@ -2,20 +2,32 @@ import React from "react";
 
 export const TableCallItem = (props) => {
     let checkedProps = false;
-    if(props.finish) checkedProps = true;
+    if(props.call.finish) checkedProps = true;
+
+
+    function hiddenFunc () {
+        if(props.call.hidden) {
+            return 'hidden';
+        } else {
+            return '';
+        }
+    }
+    const hidden = hiddenFunc()
+    const classMain = `calls-list__item ${hidden}`
+
     return (
-        <div className="calls-list__item">
+        <div className={classMain}>
             <div className="calls-list__col name-col">
-                {props.name}
+                {props.call.name}
             </div>
             <div className="calls-list__col phone-col">
-                {props.phone}
+                {props.call.phone}
             </div>
-            <div className="calls-list__col time-col" data-milisec={props.milisec}>
-                {props.time}
+            <div className="calls-list__col time-col" data-milisec={props.call.milisec}>
+                {props.call.time}
             </div>
             <div className="calls-list__col time-delete">
-                <span>delete</span>
+                <span onClick={() => props.remove(props.call)}>delete</span>
             </div>
             <div className="calls-list__col time-finish">
                 <input checked={checkedProps} type="checkbox" disabled />

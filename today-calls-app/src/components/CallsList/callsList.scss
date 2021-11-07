@@ -17,13 +17,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      @media screen and (max-width: 710px) {
+        font-size: 14px;
+        line-height: 16px;
+      }
+      @media screen and (max-width: 375px) {
+        font-size: 12px;
+        line-height: 14px;
+      }
     }
 
+  }
+  &__no-calls {
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 16px;
   }
 
   &__sort-block {
     width: 15px;
     padding: 0 20px 0 10px;
+    @media screen and (max-width: 1024px) {
+      padding: 0 16px 0 2px;
+    }
   }
   &__sort-block-up, &__sort-block-down {
     cursor: pointer;
@@ -47,6 +66,16 @@
     &:nth-child(odd) {
       background: #0e3869;
     }
+    &.hidden {
+      visibility: hidden;
+      width: 0;
+      height: 0;
+      position: absolute;
+      margin-bottom: 0;
+      padding: 0;
+      font-size: 0;
+      line-height: 0;
+    }
   }
 
   &__col {
@@ -54,6 +83,19 @@
     color: #fff;
     font-size: 14px;
     line-height: 16px;
+    @media screen and (max-width: 1024px) {
+      padding: 11px 5px 11px 6px;
+    }
+    @media screen and (max-width: 888px) {
+      font-size: 12px;
+      line-height: 14px;
+    }
+    @media screen and (max-width: 375px) {
+      font-size: 10px;
+      line-height: 12px;
+      letter-spacing: -0.3px;
+      padding: 11px 4px 11px 4px;
+    }
 
     &:not(:last-child) {
       border-right: 1px solid #fff;
@@ -70,10 +112,16 @@
 
   .time-col {
     width: 16%;
+    @media screen and (max-width: 888px) {
+      width: 21%;
+    }
   }
 
   .time-delete {
     width: 17%;
+    @media screen and (max-width: 888px) {
+      width: 12%;
+    }
 
     span {
       cursor: pointer;

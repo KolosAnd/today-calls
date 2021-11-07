@@ -1,20 +1,11 @@
 import "./callsList.scss"
 import React, {useState} from "react";
-import {Button} from "../Button/Button";
-import {Storage} from "../../storage";
 import {TableCallItem} from "../TableCallItem/TableCallItem";
+import {CallsFilter} from "../CallsFilter/CallsFilter";
 
-export const CallsList = (props) => {
-    const [calls, setCalls] = useState('');
-    const {getItems} = Storage();
-    let callsString = getItems();
-    let callsObjects = [];
-    callsString.forEach( oneCall => {
-        callsObjects.push(JSON.parse(oneCall));
-    });
-    setCalls(callsObjects);
-
+export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
     const [selectedSort, setSelectedSort] = useState('all');
+
 
     const sortAll = () => {
         if(selectedSort === 'next' || selectedSort === 'finish'){
@@ -25,17 +16,7 @@ export const CallsList = (props) => {
         setSelectedSort('next');
     }
     const sortFinish = () => {
-
-    }
-
-
-    //по возростанию
-    const sortTimeAscending = (array) => {
-
-    }
-    //по убиванию
-    const sortTimeDescending = (array) => {
-
+        setSelectedSort('finish');
     }
 
     return (
@@ -45,20 +26,20 @@ export const CallsList = (props) => {
                     <div className="calls-list__col name-col">
                         <span>Name</span>
                         <div className="calls-list__sort-block">
-                            <div className="calls-list__sort-block-up"></div>
-                            <div className="calls-list__sort-block-down"></div>
+                            <div className="calls-list__sort-block-up"/>
+                            <div className="calls-list__sort-block-down"/>
                         </div>
                     </div>
                     <div className="calls-list__col phone-col">Phone number</div>
                     <div className="calls-list__col time-col">
                         <span>Time</span>
                         <div className="calls-list__sort-block">
-                            <div className="calls-list__sort-block-up"></div>
-                            <div className="calls-list__sort-block-down"></div>
+                            <div className="calls-list__sort-block-up" onClick={sortTimeAsc}/>
+                            <div className="calls-list__sort-block-down" onClick={sortTimeDesc}/>
                         </div>
                     </div>
-                    <div className="calls-list__col time-delete"></div>
-                    <div className="calls-list__col time-finish"></div>
+                    <div className="calls-list__col time-delete"/>
+                    <div className="calls-list__col time-finish"/>
                 </div>
                 <div className="calls-list__cols-wrap">
                     {
@@ -66,21 +47,20 @@ export const CallsList = (props) => {
                         ?
                         calls.map ( (call) =>
                         <TableCallItem
-                            key={call.id} name={call.name}
-                            phone={call.phone} time={call.time}
-                            milisec={call.milisec} finish={call.finish}
+                            remove={remove}
+                            call={call}
+                            key={call.milisec}
                         />)
                         :
-                        <h1>no calls today</h1>
+                        <div className="calls-list__item">
+                            <h1 className="calls-list__no-calls">no calls today</h1>
+                        </div>
+
                     }
                 </div>
 
             </div>
-            <div className="calls-list__buttons-wrap">
-                <Button onClick={sortAll} type={"button"} classes={"calls-list__button"} text={"All"} />
-                <Button onClick={sortNext} type={"button"} classes={"calls-list__button"} text={"Next"} />
-                <Button onClick={sortFinish} type={"button"} classes={"calls-list__button"} text={"Finished"}/>
-            </div>
+            <CallsFilter/>
         </div>
     )
 }

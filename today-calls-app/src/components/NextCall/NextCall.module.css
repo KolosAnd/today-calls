@@ -1,0 +1,90 @@
+.nextCall {
+    width: 35%;
+}
+
+@media screen and (max-width: 1200px) {
+    .nextCall {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 710px) {
+    .nextCall {
+        width: 100%;
+        margin-bottom: 35px;
+    }
+}
+
+.nextCall__wrap {
+    border-radius: 5px;
+    border: 2px solid #fac863;
+    padding: 30px 25px;
+}
+
+@media screen and (max-width: 500px) {
+    .nextCall__wrap {
+        padding: 20px 15px;
+    }
+}
+
+.nextCall__title {
+    color: #fff;
+    margin: 0 0 25px;
+    font-size: 25px;
+    text-decoration: none;
+    line-height: 25px;
+}
+
+.nextCall__inputWrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 1200px) {
+    .nextCall__inputsWrap {
+        flex-wrap: wrap;
+    }
+}
+
+.nextCall__input {
+    font-size: 16px;
+    line-height: 18px;
+    color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+    .nextCall__input:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+
+.nextCall__inputName {
+    width: 35%;
+}
+
+@media screen and (max-width: 1024px) {
+    .nextCall__inputName {
+        width: 100%;
+    }
+}
+
+.nextCall__inputPhone {
+    width: 35%;
+}
+
+@media screen and (max-width: 1024px) {
+    .nextCall__inputPhone {
+        width: 100%;
+    }
+}
+
+.nextCall__inputTime {
+    width: 20%;
+}
+
+@media screen and (max-width: 1024px) {
+    .nextCall__inputTime {
+        width: 100%;
+    }
+}
