@@ -20,8 +20,8 @@
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 25px;
-    @media screen and (max-width: 500px) {
-      margin-bottom: 10px;
+    @media screen and (max-width: 600px) {
+      margin-bottom: 0;
     }
   }
 
@@ -38,14 +38,19 @@
     &::placeholder {
       color: #0b163f;
     }
-
-    &:not(:last-child) {
-      margin-right: 10px;
-    }
+  }
+  &__input-block {
+    margin: 0 10px 15px 0;
     @media screen and (max-width: 1200px) {
+      width: fit-content;
       &:not(:last-child) {
         margin-bottom: 15px;
       }
+    }
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      margin: 0 auto 15px 0;
+
     }
   }
 

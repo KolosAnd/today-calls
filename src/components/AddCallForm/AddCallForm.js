@@ -53,32 +53,39 @@ export const AddCallForm = ({create}) => {
             <Title text={"Add call"} />
             <form action="">
                 <div className="add-call__inputs-wrap">
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={e => {setName(e.target.value); setCall({...call, name: e.target.value}) }}
-                        className="add-call__input"
-                        placeholder="Name"
-                        maxLength={30}
-                    />
-                    <input
-                        type="text"
-                        value={phone}
-                        onChange={e => {
-                            if (e.target.value === '' || validRegex.test(e.target.value)) {
-                                setPhone(e.target.value);
-                                setCall({...call, phone: e.target.value});
-                            }
-                        }}
-                        className="add-call__input"
-                        placeholder="- 00XXX XXX XXX"
-                        maxLength={14}
-                    />
-                    <input type="time"
-                           value={time}
-                           onChange={e => {setTime(e.target.value);  setCall({...call, time: e.target.value}) }}
-                           className="add-call__input"
-                    />
+                    <div className="add-call__input-block">
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={e => {setName(e.target.value); setCall({...call, name: e.target.value}) }}
+                            className="add-call__input"
+                            placeholder="Name"
+                            maxLength={30}
+                        />
+                    </div>
+                    <div className="add-call__input-block">
+                        <input
+                            type="text"
+                            value={phone}
+                            onChange={e => {
+                                if (e.target.value === '' || validRegex.test(e.target.value)) {
+                                    setPhone(e.target.value);
+                                    setCall({...call, phone: e.target.value});
+                                }
+                            }}
+                            className="add-call__input"
+                            placeholder="- 00XXX XXX XXX"
+                            maxLength={14}
+                        />
+                    </div>
+                    <div className="add-call__input-block">
+                        <input type="time"
+                               value={time}
+                               onChange={e => {setTime(e.target.value);  setCall({...call, time: e.target.value}) }}
+                               className="add-call__input"
+                        />
+                    </div>
+
                 </div>
                 <Button click={addCall} type={"button"} classes={"add-call__button"} text={"Add call"}/>
             </form>
