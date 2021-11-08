@@ -39,8 +39,6 @@ function App() {
           return prev.sort((a, b) => (b.milisec - a.milisec));
         });
     }
-
-
     return (
         <div className="App">
            <Header />
