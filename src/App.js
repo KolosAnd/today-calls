@@ -2,7 +2,7 @@ import './styles/global.scss'
 import {AddCallForm} from "./components/AddCallForm/AddCallForm";
 import {CallsList} from "./components/CallsList/CallsList";
 import {Storage} from "./storage";
-import React, { useState} from "react";
+import React, {useState} from "react";
 import "./components/AddCallForm/addCallForm.scss";
 import Header from "./components/Header/Header";
 import NextCall from "./components/NextCall/NextCall";

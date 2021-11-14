@@ -7,7 +7,7 @@ import {TimeFunc} from "../../timeFunc";
 import classNames from "classnames";
 
 export const AddCallForm = ({create}) => {
-    const [call,setCall] = useState({name: '',phone: '', time: ''})
+    const [call,setCall] = useState({name: '',phone: '',time: ''})
 
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -38,7 +38,6 @@ export const AddCallForm = ({create}) => {
             setShowErrorPhone(true);
             setValidationPhone(false);
         }
-        console.log(time);
         if(time !== undefined && time !== '') {
             setShowErrorTime(false);
             setValidationTime (true);
@@ -47,12 +46,7 @@ export const AddCallForm = ({create}) => {
             setValidationTime(false);
         }
 
-        console.log(validationTime);
-
-        if(validationName && validationPhone && validationTime) {
-            return true
-        }
-        return false
+        return validationName && validationPhone && validationTime;
     }
 
     function addCall(){

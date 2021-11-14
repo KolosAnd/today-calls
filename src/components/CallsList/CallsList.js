@@ -6,7 +6,6 @@ import {CallsFilter} from "../CallsFilter/CallsFilter";
 export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
     const [selectedSort, setSelectedSort] = useState('all');
 
-
     const sortAll = () => {
         if(selectedSort === 'next' || selectedSort === 'finish'){
             setSelectedSort('all');

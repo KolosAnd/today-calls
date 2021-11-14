@@ -44,6 +44,7 @@
     }
   }
   &__input-block {
+    position: relative;
     margin: 0 auto 15px 0;
     &:not(:last-child) {
       padding-right: 15px;
@@ -70,6 +71,7 @@
     }
   }
   &__error-message {
+    max-width: 100%;
     position: absolute;
     display: block;
     padding-top: 7px;
