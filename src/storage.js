@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import {useCallback} from "react";
 
 export const Storage = () => {
     const addItemToStorage = useCallback((name,phone,time, timeInMilisec,finish) => {
