@@ -9,7 +9,7 @@ import NextCall from "./components/NextCall/NextCall";
 
 
 function App() {
-    const {getItemsFromStorage, deleteItemsFromStorage} = Storage();
+    const {getItemsFromStorage, deleteItemsFromStorage,addItemToStorage} = Storage();
     const getCalls = () => {
         return  getItemsFromStorage();
     }
@@ -20,7 +20,9 @@ function App() {
     const [filter, setFilter] = useState('all');
 
     const createCall = (newCall) => {
-        setCalls([...calls, newCall])
+        setCalls([...calls, newCall]);
+        console.log(calls);
+        addItemToStorage(calls);
     }
     const removeCalls = (call) => {
         setCalls(calls.filter(c => c.id !== call.id));

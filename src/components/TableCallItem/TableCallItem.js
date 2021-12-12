@@ -1,36 +1,38 @@
 import React from "react";
+import {TimeFunc} from "../../timeFunc";
 
-export const TableCallItem = (props) => {
-    let checkedProps = false;
-    if(props.call.finish) checkedProps = true;
-
+export const TableCallItem = (remove, call) => {
+    const timeInMilisec = TimeFunc(call.time, Date.now());
+    let finish = false;
+    if (Date.now() > timeInMilisec) finish = true;
 
     function hiddenFunc () {
-        if(props.call.hidden) {
+        if(call.hidden) {
             return 'hidden';
         } else {
             return '';
         }
     }
-    const hidden = hiddenFunc()
-    const classMain = `calls-list__item ${hidden}`
+    const hidden = hiddenFunc();
+    const classMain = `calls-list__item ${hidden}`;
+
 
     return (
         <div className={classMain}>
             <div className="calls-list__col name-col">
-                {props.call.name}
+                {call.name}
             </div>
             <div className="calls-list__col phone-col">
-                {props.call.phone}
+                {call.phone}
             </div>
-            <div className="calls-list__col time-col" data-milisec={props.call.milisec}>
-                {props.call.time}
+            <div className="calls-list__col time-col" data-milisec={call.milisec}>
+                {call.time}
             </div>
             <div className="calls-list__col time-delete">
-                <span onClick={() => props.remove(props.call)}>delete</span>
+                <span onClick={() => remove(call)}>delete</span>
             </div>
             <div className="calls-list__col time-finish">
-                <input checked={checkedProps} type="checkbox" disabled />
+                <input checked={finish} type="checkbox" disabled />
             </div>
         </div>
     )

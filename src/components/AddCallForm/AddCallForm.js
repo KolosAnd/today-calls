@@ -2,74 +2,57 @@ import React, { useState} from "react";
 import {Title} from "../Title/Title";
 import {Button} from "../Button/Button";
 import "./addCallForm.scss";
-import {Storage} from "../../storage";
 import {TimeFunc} from "../../timeFunc";
 import classNames from "classnames";
 
 export const AddCallForm = ({create}) => {
-    const [call,setCall] = useState({name: '',phone: '',time: ''})
+    const [call,setCall] = useState({id: '',name: '',phone: '',time: '',milisec: ''})
 
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [time, setTime] = useState("");
-
-    const [validationName,setValidationName] = useState(false);
-    const [validationPhone,setValidationPhone] = useState(false);
-    const [validationTime,setValidationTime] = useState(false);
+    const [validation, setValidation] = useState({validationName: false,validationPhone: false,validationTime: false  })
 
     const [showErrorName,setShowErrorName] = useState(false);
     const [showErrorPhone,setShowErrorPhone] = useState(false);
     const [showErrorTime,setShowErrorTime] = useState(false);
 
-    const {addItemToStorage} = Storage();
 
-    function validation () {
-        if(name.length > 1 && name.length <= 30) {
-            setValidationName(true);
+
+    function validationFunc () {
+        if(call.name.length > 1 && call.name.length <= 30) {
+            setValidation({...validation, validationName: true });
             setShowErrorName(false);
         }else {
             setShowErrorName(true);
-            setValidationName(false);
+            setValidation({...validation, validationName: false });
         }
-        if(phone.length === 14) {
+        if(call.phone.length === 14) {
             setShowErrorPhone(false);
-            setValidationPhone (true);
+            setValidation({...validation, validationPhone: true });
         }else {
             setShowErrorPhone(true);
-            setValidationPhone(false);
+            setValidation({...validation, validationPhone: false });
         }
-        if(time !== undefined && time !== '') {
+        if(call.time !== undefined && call.time !== '') {
             setShowErrorTime(false);
-            setValidationTime (true);
+            setValidation({...validation, validationTime: true });
         }else {
             setShowErrorTime(true);
-            setValidationTime(false);
+            setValidation({...validation, validationTime: false });
         }
-
-        return validationName && validationPhone && validationTime;
+        return validation.validationName && validation.validationPhone && validation.validationTime;
     }
 
-    function addCall(){
-        let valid = validation();
+    function addCall(e){
+        e.preventDefault();
+        let valid = validationFunc();
+
+        console.log('validation', valid);
         if(valid) {
-            const timeInMilisec = TimeFunc(time, Date.now());
-            let finish = false;
-            if (Date.now() > timeInMilisec) finish = true;
-            const newCall = {
-                id: Date.now(),
-                ...call,
-                finish: finish,
-                milisec: timeInMilisec
-            }
-            create(newCall);
-            addItemToStorage(name, phone, time, timeInMilisec, finish);
-            setName("");
-            setPhone("");
-            setTime("");
-            setValidationName(false);
-            setValidationPhone(false);
-            setValidationTime(false);
-            setCall({});
+            const timeInMilisec = TimeFunc(call.time, Date.now());
+            setCall({...call, id: Date.now() });
+            setCall({...call, milisec: timeInMilisec });
+            create(call);
+            setCall({id: '',name: '',phone: '',time: '',milisec: ''})
+            setValidation({validationName: false,validationPhone: false,validationTime: false  });
         }
     }
 
@@ -78,30 +61,27 @@ export const AddCallForm = ({create}) => {
     return (
         <div className="add-call">
             <Title text={"Add call"} />
-            <form action="">
+            <form action="" onSubmit={addCall}>
                 <div className="add-call__inputs-wrap">
                     <div className="add-call__input-block name">
                         <input
-                            required
                             type="text"
-                            value={name}
+                            value={call.name}
                             onFocus={ event => (showErrorName ? setShowErrorName(false) : event)}
-                            onChange={e => {setName(e.target.value); setCall({...call, name: e.target.value}) }}
+                            onChange={e => { setCall({...call, name: e.target.value}) }}
                             className={classNames('add-call__input',{'error': showErrorName}) }
                             placeholder="Name"
                             maxLength={30}
                         />
-                        {showErrorName ?  <span className="add-call__error-message">Name length from 2 to 30</span> : <></> }
+                        {showErrorName &&  <span className="add-call__error-message">Name length from 2 to 30</span> }
                     </div>
                     <div className="add-call__input-block phone">
                         <input
-                            required
                             type="text"
-                            value={phone}
+                            value={call.phone}
                             onFocus={ event => (showErrorPhone ? setShowErrorPhone(false) : event) }
                             onChange={e => {
                                 if (e.target.value === '' || pattern.test(e.target.value)) {
-                                    setPhone(e.target.value);
                                     setCall({...call, phone: e.target.value});
                                 }
 
@@ -111,22 +91,21 @@ export const AddCallForm = ({create}) => {
                             minLength={14}
                             maxLength={14}
                         />
-                        {showErrorPhone ?  <span className="add-call__error-message">Example of correct phone: <br/>00385937591047</span> : <></>}
+                        {showErrorPhone && <span className="add-call__error-message">Example of correct phone: <br/>00385937591047</span>}
 
                     </div>
                     <div className="add-call__input-block time">
                         <input type="time"
-                               required
-                               value={time}
+                               value={call.time}
                                onFocus={event => (showErrorTime ? setShowErrorTime(false) : event)}
-                               onChange={e => {setTime(e.target.value);  setCall({...call, time: e.target.value}) }}
+                               onChange={e => {setCall({...call, time: e.target.value}) }}
                                className={classNames('add-call__input',{'error': showErrorTime}) }
                         />
-                        {showErrorTime ?  <span className="add-call__error-message">enter time (e.g. 14:10)</span> : <></> }
+                        {showErrorTime &&  <span className="add-call__error-message">enter time (e.g. 14:10)</span> }
                     </div>
 
                 </div>
-                <Button click={addCall} type={"button"} classes={"add-call__button"} text={"Add call"}/>
+                <Button click={addCall} classes={"add-call__button"} text={"Add call"}/>
             </form>
         </div>
     )

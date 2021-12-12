@@ -1,23 +1,18 @@
 import {useCallback} from "react";
 
 export const Storage = () => {
-    const addItemToStorage = useCallback((name,phone,time, timeInMilisec,finish) => {
-        let data = {'id': Date.now(), 'name': name, 'phone': phone, 'time': time, 'milisec': timeInMilisec, 'finish': finish }
-        localStorage.setItem(`${timeInMilisec}`, JSON.stringify(data));
+    const addItemToStorage = useCallback((calls) => {
+        localStorage.setItem('list', JSON.stringify(calls));
     },[]);
 
     const getItemsFromStorage = useCallback( () => {
         let calls = [];
         let callsObjects = [];
-        for(let key in localStorage) {
-            if (!localStorage.hasOwnProperty(key)) {
-                continue;
-            }
-            calls.push(localStorage.getItem(key));
-            calls.forEach( oneCall => {
-                callsObjects.push(JSON.parse(oneCall));
-            });
-        }
+        calls.push(localStorage.getItem('list'));
+        calls.forEach( oneCall => {
+            callsObjects.push(JSON.parse(oneCall));
+        });
+
         return callsObjects;
     }, []);
 

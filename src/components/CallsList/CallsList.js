@@ -48,7 +48,7 @@ export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
                         <TableCallItem
                             remove={remove}
                             call={call}
-                            key={call.milisec}
+                            key={call.id}
                         />)
                         :
                         <div className="calls-list__item">

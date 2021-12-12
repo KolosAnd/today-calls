@@ -1,4 +1,5 @@
 export const TimeFunc = (time,now) => {
+    if(time == undefined)return ;
     const date = new Date(now);
     let hours = date.getHours();
     let minutes = date.getMinutes();
