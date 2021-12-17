@@ -6,18 +6,23 @@ import React, {useState} from "react";
 import "./components/AddCallForm/addCallForm.scss";
 import Header from "./components/Header/Header";
 import NextCall from "./components/NextCall/NextCall";
+import {ContractContext} from "./context/context";
+import {createStore} from 'redux';
+import rootReducer from "./redux/rootReducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 
 function App() {
-    const {getItemsFromStorage, deleteItemsFromStorage,addItemToStorage} = Storage();
+    let store = createStore(rootReducer, composeWithDevTools());
+    store.subscribe(() => console.log(store.getState()))
+    const {getItemsFromStorage,addItemToStorage} = Storage();
     const getCalls = () => {
+        console.log(getItemsFromStorage());
         return  getItemsFromStorage();
     }
     const [calls, setCalls] = useState(() => {
       return getCalls();
     });
-
-    const [filter, setFilter] = useState('all');
 
     const createCall = (newCall) => {
         setCalls([...calls, newCall]);
@@ -26,7 +31,7 @@ function App() {
     }
     const removeCalls = (call) => {
         setCalls(calls.filter(c => c.id !== call.id));
-        deleteItemsFromStorage(call.milisec);
+        addItemToStorage(calls);
     }
 
     //по возростанию
@@ -42,25 +47,27 @@ function App() {
         });
     }
     return (
-        <div className="App">
-           <Header />
-            <div className="container">
-                <div className="main-wrap">
-                    <NextCall />
-                    <div className="calls-wrap">
-                        <AddCallForm create={createCall}/>
+        <ContractContext.Provider value={{calls, store}}>
+            <div className="App">
+               <Header />
+                <div className="container">
+                    <div className="main-wrap">
+                        <NextCall />
+                        <div className="calls-wrap">
+                            <AddCallForm create={createCall}/>
 
-                        <CallsList
-                            remove={removeCalls} calls={calls}
-                            sortTimeAsc={sortTimeAscending}
-                            sortTimeDesc={sortTimeDescending}
-                        />
+                            <CallsList
+                                remove={removeCalls} calls={calls}
+                                sortTimeAsc={sortTimeAscending}
+                                sortTimeDesc={sortTimeDescending}
+                            />
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
-        </div>
+            </div>
+        </ContractContext.Provider>
     );
 }
 

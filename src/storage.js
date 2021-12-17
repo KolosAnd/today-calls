@@ -5,7 +5,7 @@ export const Storage = () => {
         localStorage.setItem('list', JSON.stringify(calls));
     },[]);
 
-    const getItemsFromStorage = useCallback( () => {
+    const getItemsFromStorage = useCallback(  () => {
         let calls = [];
         let callsObjects = [];
         calls.push(localStorage.getItem('list'));
@@ -16,9 +16,6 @@ export const Storage = () => {
         return callsObjects;
     }, []);
 
-    const deleteItemsFromStorage = useCallback( (key) => {
-        localStorage.removeItem(key);
-    }, []);
 
-    return {addItemToStorage, getItemsFromStorage, deleteItemsFromStorage}
+    return {addItemToStorage, getItemsFromStorage}
 }

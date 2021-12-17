@@ -4,19 +4,6 @@ import {TableCallItem} from "../TableCallItem/TableCallItem";
 import {CallsFilter} from "../CallsFilter/CallsFilter";
 
 export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
-    const [selectedSort, setSelectedSort] = useState('all');
-
-    const sortAll = () => {
-        if(selectedSort === 'next' || selectedSort === 'finish'){
-            setSelectedSort('all');
-        }
-    }
-    const sortNext = () => {
-        setSelectedSort('next');
-    }
-    const sortFinish = () => {
-        setSelectedSort('finish');
-    }
 
     return (
         <div className="calls-list">
@@ -42,19 +29,16 @@ export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
                 </div>
                 <div className="calls-list__cols-wrap">
                     {
-                        calls.length
-                        ?
-                        calls.map ( (call) =>
+                        calls && calls[0] && calls.length
+                        ? calls.map ( (call) =>
                         <TableCallItem
                             remove={remove}
                             call={call}
                             key={call.id}
                         />)
-                        :
-                        <div className="calls-list__item">
+                        : <div className="calls-list__item">
                             <h1 className="calls-list__no-calls">no calls today</h1>
                         </div>
-
                     }
                 </div>
 
