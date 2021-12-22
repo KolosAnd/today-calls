@@ -1,7 +1,6 @@
 import './styles/global.scss'
 import {AddCallForm} from "./components/AddCallForm/AddCallForm";
 import {CallsList} from "./components/CallsList/CallsList";
-import {Storage} from "./storage";
 import React, {useState} from "react";
 import "./components/AddCallForm/addCallForm.scss";
 import Header from "./components/Header/Header";
@@ -15,23 +14,24 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 function App() {
     let store = createStore(rootReducer, composeWithDevTools());
     store.subscribe(() => console.log(store.getState()))
-    const {getItemsFromStorage,addItemToStorage} = Storage();
     const getCalls = () => {
-        console.log(getItemsFromStorage());
-        return  getItemsFromStorage();
+        let calls = [];
+        let callsObjects = [];
+        calls.push(localStorage.getItem('list'));
+        calls.forEach( oneCall => {
+            callsObjects.push(JSON.parse(oneCall));
+        });
+
+        return callsObjects;
     }
     const [calls, setCalls] = useState(() => {
       return getCalls();
     });
 
-    const createCall = (newCall) => {
-        setCalls([...calls, newCall]);
-        console.log(calls);
-        addItemToStorage(calls);
-    }
+
     const removeCalls = (call) => {
         setCalls(calls.filter(c => c.id !== call.id));
-        addItemToStorage(calls);
+        localStorage.setItem('list', JSON.stringify(calls));
     }
 
     //по возростанию
@@ -47,14 +47,14 @@ function App() {
         });
     }
     return (
-        <ContractContext.Provider value={{calls, store}}>
+        <ContractContext.Provider value={{calls}}>
             <div className="App">
                <Header />
                 <div className="container">
                     <div className="main-wrap">
                         <NextCall />
                         <div className="calls-wrap">
-                            <AddCallForm create={createCall}/>
+                            <AddCallForm/>
 
                             <CallsList
                                 remove={removeCalls} calls={calls}

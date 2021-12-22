@@ -1,5 +1,5 @@
 import "./callsList.scss"
-import React, {useState} from "react";
+import React from "react";
 import {TableCallItem} from "../TableCallItem/TableCallItem";
 import {CallsFilter} from "../CallsFilter/CallsFilter";
 
