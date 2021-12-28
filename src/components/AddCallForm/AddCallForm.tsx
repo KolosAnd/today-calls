@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Title} from "../Title/Title";
 import "./addCallForm.scss";
 import {TimeFunc} from "../../timeFunc";
@@ -10,7 +10,7 @@ import {ContractContext} from "../../context/context";
 
 
 const initialState: ICallScheme = {
-    id: '',name: '',phone: '',time: '',milisec: 0
+    id: 0,name: '',phone: '',time: '',milisec: 0
 }
 
 const textOnly = (value) => /^\D+$/.test(value);
@@ -30,38 +30,38 @@ const schema = yup.object({
     time: yup.string().required('Обязательное поле').test('Некоректная дата', 'Некоректная дата', dateReg).typeError('Только дата'),
 }).required();
 
-// @ts-ignore
-export const AddCallForm = () => {
+export const AddCallForm = ({addOneCall}) => {
     const [call,setCall] = useState(initialState);
-    const {calls} = useContext(ContractContext);
 
-    const [callsObj,setCallsObj] = useState({calls});
+    const context:Record<string,any> = useContext(ContractContext);
+    const calls = context.calls;
 
     const defaultValues = {
         resolver: yupResolver(schema)
     }
     const {register, formState: {errors}, handleSubmit, reset} = useForm(defaultValues);
 
-    const addCall =  (data: any) =>{
+    const addCall =  (data: any) => {
 
         const form = new FormData();
         form.append("name", data.name);
         form.append("phone", data.phone);
         form.append("time", data.time);
 
-        const timeInMilisec = TimeFunc(call.time, Date.now());
+        const timeInMilisec:number = TimeFunc(call.time, Date.now());
+        setCall({...call, id:  Date.now(), milisec: timeInMilisec  });
 
-        setCall({...call, id: Date.now() });
-        setCall({...call, milisec: timeInMilisec });
-        console.log(timeInMilisec);
-
-        setCallsObj([...calls, callsObj]);
-        console.log(calls);
-        localStorage.setItem('list', JSON.stringify(calls));
-
-        reset(defaultValues);
-        setCall({id: '',name: '',phone: '',time: '',milisec: 0});
     }
+
+    useEffect( () => {
+        if(call.id){
+            let finalArr = calls.concat([call]);
+            localStorage.setItem('list', JSON.stringify(finalArr));
+            addOneCall(call);
+            // reset(defaultValues);
+            setCall(initialState);
+        }
+    },[call]);
 
     return (
         <div className="add-call">
@@ -89,7 +89,7 @@ export const AddCallForm = () => {
                             {...register("phone")}
                             onChange={e => {setCall({...call, phone: e.target.value}) }}
                             name="phone"
-                            placeholder="(0ХХ) ХХ-ХХ-ХХХ"
+                            placeholder="0ХХ-ХХ-ХХ-ХХХ"
                             type="text"
                             className={errors.phone
                                 ? "add-call__input error" : "add-call__input"

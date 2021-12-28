@@ -6,29 +6,28 @@ export const TimeFunc = (time,now) => {
     let seconds = date.getSeconds();
     let startDayTimeInMilisec = date - timeInMiliseconds(hours, minutes, seconds);
 
-    function timeInMiliseconds(hours,minutes,seconds) {
-        return ( (hours * 3600000) + (minutes * 60000) + (seconds * 1000));
+    let hoursNumber = (time[0]*10)+Number(time[1]);
+    let minutesNumber = (time[3]*10)+Number(time[4]);
+
+    if(typeof time == "number"){
+        return (startDayTimeInMilisec + time);
     }
 
-    let timeArr = time.split('');
-    let timeHours = 0;
-    let timeMinutes = 0;
-    if(timeArr[0] === '0' && timeArr[1] === '0' ){
-        timeHours = 0;
-    } else if(timeArr[0] === '0' && timeArr[1] !== '0'){
-        timeHours =  timeArr[1];
-    } else {
-        timeHours = timeArr[0] + timeArr[1];
-    }
-    if(timeArr[3] === '0' && timeArr[4] === '0' ){
-        timeMinutes = 0;
-    } else if(timeArr[3] === '0' && timeArr[4] !== '0'){
-        timeMinutes =  timeArr[4];
-    } else {
-        timeMinutes = timeArr[3] + timeArr[4];
-    }
+    return (startDayTimeInMilisec + timeInMiliseconds(hoursNumber,minutesNumber,0))
+}
 
-    let callTimeInMilisec = timeInMiliseconds(timeHours,timeMinutes,0);
-    return (startDayTimeInMilisec + callTimeInMilisec)
+function timeInMiliseconds(hours,minutes,seconds) {
+    return ( (hours * 3600000) + (minutes * 60000) + (seconds * 1000));
+}
+
+export const timeToMs = (mmss) => {
+    if(typeof mmss !== 'string') {
+        if(mmss.toString()) mmss = mmss.toString();
+        else throw new Error("Invalid input");
+    }
+    let hoursNumber = (mmss[0]*10)+Number(mmss[1]);
+    let minutesNumber = (mmss[3]*10)+Number(mmss[4]);
+
+    return timeInMiliseconds(hoursNumber,minutesNumber,0);
 
 }
