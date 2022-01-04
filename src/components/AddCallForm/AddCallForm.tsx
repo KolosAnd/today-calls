@@ -15,7 +15,7 @@ const initialState: ICallScheme = {
 
 const textOnly = (value) => /^\D+$/.test(value);
 const dateReg = (value) => /^\d\d:\d\d+$/.test(value);
-const phoneNumberReg = (value) => /^[0]\d\d\-\d\d\-\d\d\-\d\d\d+$/.test(value);
+const phoneNumberReg = (value) => /^\+|(0{2})|[\(]?\d{3}[\)]?[-\s]?\d{3}[-\s]?\d{3}[-\s]?\d{3}$/.test(value);
 
 const schema = yup.object({
     // @ts-ignore
@@ -24,7 +24,7 @@ const schema = yup.object({
         .typeError('Только текст'),
     // @ts-ignore
     phone: yup.string().required('Обязательное поле')
-        .test('0xx-xx-xx-xxx', '0xx-xx-xx-xxx', phoneNumberReg).min(13, 'Телефон 15 символов').max(13, 'Телефон 15 символов')
+        .test('+(xxx)-xxx-xxx-xxx', '+(xxx)-xxx-xxx-xxx', phoneNumberReg).min(13, 'Телефон минимум 13 символов').max(18, 'Телефон максимум 18 символов')
         .typeError('Введите коректный номер'),
     // @ts-ignore
     time: yup.string().required('Обязательное поле').test('Некоректная дата', 'Некоректная дата', dateReg).typeError('Только дата'),
@@ -49,7 +49,12 @@ export const AddCallForm = ({addOneCall}) => {
         form.append("time", data.time);
 
         const timeInMilisec:number = TimeFunc(call.time, Date.now());
-        setCall({...call, id:  Date.now(), milisec: timeInMilisec  });
+        let newCall = {
+            id:  Date.now(),
+            milisec: timeInMilisec,
+            phone: '00'+call.phone.replaceAll(/[\(\)\-\+\s]/g,'').replaceAll(/^(0{2})/g,'')
+        }
+        setCall({ ...call, ...newCall});
 
     }
 
@@ -90,7 +95,7 @@ export const AddCallForm = ({addOneCall}) => {
                             onChange={e => {setCall({...call, phone: e.target.value}) }}
                             name="phone"
                             value={call.phone}
-                            placeholder="0ХХ-ХХ-ХХ-ХХХ"
+                            placeholder="+(ХХX)-XXХ-XХХ-ХХХ"
                             type="text"
                             className={errors.phone
                                 ? "add-call__input error" : "add-call__input"
