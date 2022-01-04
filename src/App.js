@@ -25,19 +25,17 @@ function App() {
       return getCalls();
     });
 
-    const [updateFunc, setUpdateFunc] = useState(false);
-
 
     const removeCalls = (callID) => {
-        setCalls(calls.filter(c => c.id !== callID));
-        setUpdateFunc(true);
+        let removeCalls = calls.filter(c => c.id !== callID);
+        setCalls(removeCalls);
     }
 
     useEffect( () => {
-        if(updateFunc) {
+        if(calls.length) {
             localStorage.setItem('list', JSON.stringify(calls));
         }
-    },[updateFunc]);
+    },[calls]);
 
 
 
@@ -51,7 +49,9 @@ function App() {
                <Header />
                 <div className="container">
                     <div className="main-wrap">
-                        <NextCall />
+
+                        <NextCall calls={calls}/>
+
                         <div className="calls-wrap">
                             <AddCallForm addOneCall={addOneCall}/>
 

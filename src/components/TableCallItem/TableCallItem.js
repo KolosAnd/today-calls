@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {TimeFunc, timeToMs} from "../../timeFunc";
+import {TimeFunc, timeToMs} from "../../utils/timeFunc";
 
 export const TableCallItem = ({remove, call, hidden}) => {
 

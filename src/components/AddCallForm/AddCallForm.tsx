@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Title} from "../Title/Title";
 import "./addCallForm.scss";
-import {TimeFunc} from "../../timeFunc";
+import {TimeFunc} from "../../utils/timeFunc";
 import * as yup from "yup";
 import ICallScheme from "./typesAddCall";
 import { useForm } from "react-hook-form";
@@ -58,7 +58,6 @@ export const AddCallForm = ({addOneCall}) => {
             let finalArr = calls.concat([call]);
             localStorage.setItem('list', JSON.stringify(finalArr));
             addOneCall(call);
-            // reset(defaultValues);
             setCall(initialState);
         }
     },[call]);
@@ -72,6 +71,7 @@ export const AddCallForm = ({addOneCall}) => {
                     <div className="add-call__input-block name">
                         <input
                             {...register("name")}
+                            value={call.name}
                             onChange={e => {setCall({...call, name: e.target.value}) }}
                             name="name"
                             type="text"
@@ -89,6 +89,7 @@ export const AddCallForm = ({addOneCall}) => {
                             {...register("phone")}
                             onChange={e => {setCall({...call, phone: e.target.value}) }}
                             name="phone"
+                            value={call.phone}
                             placeholder="0ХХ-ХХ-ХХ-ХХХ"
                             type="text"
                             className={errors.phone
@@ -102,6 +103,7 @@ export const AddCallForm = ({addOneCall}) => {
                         <input type="time"
                                name="time"
                                {...register("time")}
+                               value={call.time}
                                onChange={e => {setCall({...call, time: e.target.value}) }}
                                className={errors.time
                                    ? "add-call__input error" : "add-call__input"
