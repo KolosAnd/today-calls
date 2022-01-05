@@ -24,7 +24,6 @@
 }
 
 
-
 .App {
   height: 100%;
   min-height: 100vh;
@@ -44,6 +43,24 @@ body{
     min-width: 100%;
   }
 
+}
+
+.button {
+  border-radius: 5px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 15px 30px;
+  background: #2c5f91;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.button:hover {
+  background: #2075be;
 }
 
 

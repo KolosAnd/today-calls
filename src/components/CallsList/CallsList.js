@@ -1,21 +1,42 @@
 import "./callsList.scss"
-import React, {useState} from "react";
+import React, { useState} from "react";
 import {TableCallItem} from "../TableCallItem/TableCallItem";
-import {CallsFilter} from "../CallsFilter/CallsFilter";
 
-export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
-    const [selectedSort, setSelectedSort] = useState('all');
+export const CallsList = ({calls, remove}) => {
 
-    const sortAll = () => {
-        if(selectedSort === 'next' || selectedSort === 'finish'){
-            setSelectedSort('all');
+    const [sortType, setSortType ]= useState('');
+    const [sortButtonType, setSortButtonType ]= useState('all');
+
+    //по возростанию
+    const sortTimeAscending = (a,b) =>  (a.milisec - b.milisec) ;
+
+    //по убиванию
+    const sortTimeDescending = (a,b) => (b.milisec - a.milisec);
+
+    //по возростанию
+    const sortNameAscending = (a,b) => {
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+        return 0;
+    } ;
+
+    //по убиванию
+    const sortNameDescending = (a,b) => {
+        if (a.name < b.name) return 1;
+        if (a.name > b.name) return -1;
+        return 0;
+    };
+
+    const sortFunc =(a,b) => {
+        if(sortType === 'ascTime') {
+            return  sortTimeAscending(a,b);
+        } else if(sortType === 'descTime') {
+            return  sortTimeDescending(a,b);
+        } else if (sortType === 'ascName') {
+            return  sortNameAscending(a,b);
+        }else if (sortType === 'descName') {
+            return  sortNameDescending(a,b);
         }
-    }
-    const sortNext = () => {
-        setSelectedSort('next');
-    }
-    const sortFinish = () => {
-        setSelectedSort('finish');
     }
 
     return (
@@ -25,16 +46,16 @@ export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
                     <div className="calls-list__col name-col">
                         <span>Name</span>
                         <div className="calls-list__sort-block">
-                            <div className="calls-list__sort-block-up"/>
-                            <div className="calls-list__sort-block-down"/>
+                            <div className="calls-list__sort-block-up" onClick={() => setSortType('ascName')}/>
+                            <div className="calls-list__sort-block-down" onClick={() =>  setSortType('descName')}/>
                         </div>
                     </div>
                     <div className="calls-list__col phone-col">Phone number</div>
                     <div className="calls-list__col time-col">
                         <span>Time</span>
                         <div className="calls-list__sort-block">
-                            <div className="calls-list__sort-block-up" onClick={sortTimeAsc}/>
-                            <div className="calls-list__sort-block-down" onClick={sortTimeDesc}/>
+                            <div className="calls-list__sort-block-up" onClick={() => setSortType('ascTime')}/>
+                            <div className="calls-list__sort-block-down" onClick={() =>  setSortType('descTime')}/>
                         </div>
                     </div>
                     <div className="calls-list__col time-delete"/>
@@ -43,23 +64,24 @@ export const CallsList = ({calls, remove ,sortTimeAsc, sortTimeDesc}) => {
                 <div className="calls-list__cols-wrap">
                     {
                         calls.length
-                        ?
-                        calls.map ( (call) =>
-                        <TableCallItem
-                            remove={remove}
-                            call={call}
-                            key={call.milisec}
-                        />)
-                        :
-                        <div className="calls-list__item">
-                            <h1 className="calls-list__no-calls">no calls today</h1>
-                        </div>
-
+                            ? calls.sort(sortFunc).map ( (callItem) =>
+                                <TableCallItem
+                                    hidden={sortButtonType}
+                                    remove={remove}
+                                    call={callItem}
+                                    key={callItem.id}
+                                />)
+                            : <div className="calls-list__item">
+                                <h1 className="calls-list__no-calls">no calls today</h1>
+                            </div>
                     }
                 </div>
-
             </div>
-            <CallsFilter/>
+            <div className="calls-list__buttons-wrap">
+                <button onClick={() =>setSortButtonType('all') } type={"button"} className="button calls-list__button">All</button>
+                <button onClick={() =>setSortButtonType('next')} type={"button"} className="button calls-list__button">Next</button>
+                <button onClick={() =>setSortButtonType('finished')} type={"button"} className="button calls-list__button">Finished</button>
+            </div>
         </div>
     )
 }
