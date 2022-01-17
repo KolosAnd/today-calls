@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component Header without props 1`] = `
+<header
+  className="header"
+>
+  <div
+    className="header__container  container"
+  >
+    <div
+      className="title"
+    >
+      <h2
+        className="title__name header__title main-title"
+      >
+        Today calls app
+      </h2>
+    </div>
+  </div>
+</header>
+`;

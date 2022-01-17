@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NextCall component NextCall with props 1`] = `
+<div
+  className="nextCall"
+>
+  <div
+    className="nextCall__wrap"
+  >
+    <div
+      className="title"
+    >
+      <h2
+        className="title__name undefined"
+      >
+        Next call
+      </h2>
+    </div>
+    <div
+      className="nextCall__inputWrap"
+    >
+      <div
+        className="nextCall__input nextCall__inputName"
+      />
+      <div
+        className="nextCall__input nextCall__inputPhone"
+      />
+      <div
+        className="nextCall__input nextCall__inputTime"
+      >
+         
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NextCall component NextCall with props fake calls 1`] = `
+<div
+  className="nextCall"
+>
+  <div
+    className="nextCall__wrap"
+  >
+    <div
+      className="title"
+    >
+      <h2
+        className="title__name undefined"
+      >
+        Next call
+      </h2>
+    </div>
+    <div
+      className="nextCall__inputWrap"
+    >
+      <div
+        className="nextCall__input nextCall__inputName"
+      />
+      <div
+        className="nextCall__input nextCall__inputPhone"
+      />
+      <div
+        className="nextCall__input nextCall__inputTime"
+      >
+         
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NextCall component NextCall with props one call undefined 1`] = `
+<div
+  className="nextCall"
+>
+  <div
+    className="nextCall__wrap"
+  >
+    <div
+      className="title"
+    >
+      <h2
+        className="title__name undefined"
+      >
+        Next call
+      </h2>
+    </div>
+    <div
+      className="nextCall__inputWrap"
+    >
+      <div
+        className="nextCall__input nextCall__inputName"
+      />
+      <div
+        className="nextCall__input nextCall__inputPhone"
+      />
+      <div
+        className="nextCall__input nextCall__inputTime"
+      >
+         
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NextCall component NextCall without props 1`] = `
+<div
+  className="nextCall"
+>
+  <div
+    className="nextCall__wrap"
+  >
+    <div
+      className="title"
+    >
+      <h2
+        className="title__name undefined"
+      >
+        Next call
+      </h2>
+    </div>
+    <div
+      className="nextCall__inputWrap"
+    >
+      <div
+        className="nextCall__input nextCall__inputName"
+      />
+      <div
+        className="nextCall__input nextCall__inputPhone"
+      />
+      <div
+        className="nextCall__input nextCall__inputTime"
+      >
+         
+      </div>
+    </div>
+  </div>
+</div>
+`;

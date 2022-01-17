@@ -2,7 +2,7 @@ import React from "react";
 import mainClass from "./Header.module.css";
 import {Title} from "../Title/Title";
 
-const Header = (props) => {
+const Header = () => {
     return (
         <header className={mainClass.header}>
             <div className={`${mainClass.header__container}  container`}>

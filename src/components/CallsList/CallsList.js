@@ -1,31 +1,14 @@
 import "./callsList.scss"
 import React, { useState} from "react";
 import {TableCallItem} from "../TableCallItem/TableCallItem";
+import {sortNameAscending, sortNameDescending, sortTimeAscending, sortTimeDescending} from "../../utils/sortingFunc";
 
 export const CallsList = ({calls, remove}) => {
 
     const [sortType, setSortType ]= useState('');
     const [sortButtonType, setSortButtonType ]= useState('all');
 
-    //по возростанию
-    const sortTimeAscending = (a,b) =>  (a.milisec - b.milisec) ;
 
-    //по убиванию
-    const sortTimeDescending = (a,b) => (b.milisec - a.milisec);
-
-    //по возростанию
-    const sortNameAscending = (a,b) => {
-        if (a.name > b.name) return 1;
-        if (a.name < b.name) return -1;
-        return 0;
-    } ;
-
-    //по убиванию
-    const sortNameDescending = (a,b) => {
-        if (a.name < b.name) return 1;
-        if (a.name > b.name) return -1;
-        return 0;
-    };
 
     const sortFunc =(a,b) => {
         if(sortType === 'ascTime') {

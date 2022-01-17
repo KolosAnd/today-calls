@@ -9,6 +9,7 @@ import {ContractContext} from "./context/context";
 import {createStore} from 'redux';
 import rootReducer from "./redux/rootReducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
+import deleteCall from "./utils/indexUtil";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
 
 
     const removeCalls = (callID) => {
-        let removeCalls = calls.filter(c => c.id !== callID);
+        let removeCalls = deleteCall(calls, callID) ;
         setCalls(removeCalls);
     }
 

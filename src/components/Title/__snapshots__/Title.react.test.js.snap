@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title changes the class when hovered 1`] = `
+<div
+  className="title"
+>
+  <h2
+    className="title__name undefined"
+  />
+</div>
+`;
+
+exports[`Title component Title with test props 1`] = `
+<div
+  className="title"
+>
+  <h2
+    className="title__name "
+  >
+    Next call
+  </h2>
+</div>
+`;
+
+exports[`Title component Title without props 1`] = `
+<div
+  className="title"
+>
+  <h2
+    className="title__name undefined"
+  />
+</div>
+`;
+
+exports[`Title with test props 1`] = `
+<div
+  className="title"
+>
+  <h2
+    className="title__name "
+  >
+    Next call
+  </h2>
+</div>
+`;
+
+exports[`Title without props 1`] = `
+<div
+  className="title"
+>
+  <h2
+    className="title__name undefined"
+  />
+</div>
+`;

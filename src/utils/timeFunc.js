@@ -1,4 +1,4 @@
-export const TimeFunc = (time,now) => {
+export const getTimeCall = (time,now) => {
     if(time == undefined)return ;
     const date = new Date(now);
 
@@ -6,7 +6,7 @@ export const TimeFunc = (time,now) => {
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
 
-    let startDayTimeInMilisec = date - timeInMiliseconds( hours, minutes, seconds);
+    let startDayTimeInMilisec = date - getMilisecondsFromTime( hours, minutes, seconds);
 
     let hoursNumber = (time[0]*10)+Number(time[1]);
     let minutesNumber = (time[3]*10)+Number(time[4]);
@@ -15,16 +15,17 @@ export const TimeFunc = (time,now) => {
         return (startDayTimeInMilisec + time);
     }
 
-    return (startDayTimeInMilisec + timeInMiliseconds(hoursNumber,minutesNumber,0))
+    return (startDayTimeInMilisec + getMilisecondsFromTime(hoursNumber,minutesNumber,0))
 }
 
-export function timeInMiliseconds(hours,minutes,seconds) {
+
+export function getMilisecondsFromTime(hours,minutes,seconds) {
     return ( (hours * 3600000) + (minutes * 60000) + (seconds * 1000));
 }
 
 
 // translate time ("14:25") to milisec
-export const timeToMs = (mmss) => {
+export const translateTimeStringToMiliseconds = (mmss) => {
     if(typeof mmss !== 'string') {
         if(mmss.toString()) mmss = mmss.toString();
         else throw new Error("Invalid input");
@@ -32,6 +33,6 @@ export const timeToMs = (mmss) => {
     let hoursNumber = (mmss[0]*10)+Number(mmss[1]);
     let minutesNumber = (mmss[3]*10)+Number(mmss[4]);
 
-    return timeInMiliseconds(hoursNumber,minutesNumber,0);
+    return getMilisecondsFromTime(hoursNumber,minutesNumber,0);
 
 }

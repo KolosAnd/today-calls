@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Title} from "../Title/Title";
 import "./addCallForm.scss";
-import {TimeFunc} from "../../utils/timeFunc";
+import {getTimeCall} from "../../utils/timeFunc";
 import * as yup from "yup";
 import ICallScheme from "./typesAddCall";
 import { useForm } from "react-hook-form";
@@ -30,8 +30,15 @@ const schema = yup.object({
     time: yup.string().required('Обязательное поле').test('Некоректная дата', 'Некоректная дата', dateReg).typeError('Только дата'),
 }).required();
 
+const STATUS = {
+    HOVERED: 'hovered',
+    NORMAL: 'normal',
+};
+
 export const AddCallForm = ({addOneCall}) => {
     const [call,setCall] = useState(initialState);
+
+    const [status, setStatus] = useState(STATUS.NORMAL);
 
     const context:Record<string,any> = useContext(ContractContext);
     const calls = context.calls;
@@ -48,7 +55,7 @@ export const AddCallForm = ({addOneCall}) => {
         form.append("phone", data.phone);
         form.append("time", data.time);
 
-        const timeInMilisec:number = TimeFunc(call.time, Date.now());
+        const timeInMilisec:number = getTimeCall(call.time, Date.now());
         let newCall = {
             id:  Date.now(),
             milisec: timeInMilisec,
@@ -57,6 +64,14 @@ export const AddCallForm = ({addOneCall}) => {
         setCall({ ...call, ...newCall});
 
     }
+
+    const onMouseEnter = () => {
+        setStatus(STATUS.HOVERED);
+    };
+
+    const onMouseLeave = () => {
+        setStatus(STATUS.NORMAL);
+    };
 
     useEffect( () => {
         if(call.id){
@@ -117,7 +132,10 @@ export const AddCallForm = ({addOneCall}) => {
                         { <span className="add-call__error-message">{errors.time?.message}</span>}
                     </div>
                 </div>
-                <button type="submit" className="button add-call__button">Add call</button>
+                <button type="submit"
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                        className={`button add-call__button ${status}`}>Add call</button>
             </form>
 
         </div>

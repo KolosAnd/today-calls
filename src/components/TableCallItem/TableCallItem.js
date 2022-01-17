@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {TimeFunc, timeToMs} from "../../utils/timeFunc";
+import {getTimeCall, translateTimeStringToMiliseconds} from "../../utils/timeFunc";
 
 export const TableCallItem = ({remove, call, hidden}) => {
 
@@ -7,9 +7,9 @@ export const TableCallItem = ({remove, call, hidden}) => {
     const [classMain, setClassMain] = useState('calls-list__item');
 
     useEffect(() => {
-        if(call.time) {
-            const timeInSeconds = timeToMs(call.time);
-            const timeInMilisec = TimeFunc(timeInSeconds, Date.now());
+        if(call?.time) {
+            const timeInSeconds = translateTimeStringToMiliseconds(call.time);
+            const timeInMilisec = getTimeCall(timeInSeconds, Date.now());
             if (Date.now() > timeInMilisec) setIsFinished(true);
         }
     }, [call]);
