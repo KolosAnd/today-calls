@@ -42,6 +42,7 @@ export const CallsList = ({calls, remove}) => {
                         </div>
                     </div>
                     <div className="calls-list__col time-delete"/>
+                    <div className="calls-list__col update-item"/>
                     <div className="calls-list__col time-finish"/>
                 </div>
                 <div className="calls-list__cols-wrap">

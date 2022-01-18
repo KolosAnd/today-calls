@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getTimeCall, translateTimeStringToMiliseconds} from "../../utils/timeFunc";
+import {UpdatePopup} from "../updatePopup/UpdatePopup";
 
 export const TableCallItem = ({remove, call, hidden}) => {
 
@@ -41,6 +42,9 @@ export const TableCallItem = ({remove, call, hidden}) => {
                     </div>
                     <div className="calls-list__col time-delete">
                         <span onClick={() => remove(call.id)}>delete</span>
+                    </div>
+                    <div className="calls-list__col update-item">
+                        <UpdatePopup updatedCall={call}/>
                     </div>
                     <div className="calls-list__col time-finish">
                         <input checked={isFinished} type="checkbox" disabled />

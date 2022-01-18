@@ -79,6 +79,8 @@
   }
 
   &__col {
+    display: flex;
+    align-items: center;
     padding: 11px 7px 11px 11px;
     color: #fff;
     font-size: 14px;
@@ -103,11 +105,11 @@
   }
 
   .name-col {
-    width: 30%;
+    width: 27%;
   }
 
   .phone-col {
-    width: 30%;
+    width: 27%;
   }
 
   .time-col {
@@ -126,6 +128,16 @@
     span {
       cursor: pointer;
       text-decoration: underline;
+    }
+  }
+  .update-item {
+    width: 6%;
+    span {
+      display: block;
+      width: 21px;
+    }
+    .svg-icon {
+      cursor: pointer;
     }
   }
 
@@ -154,5 +166,32 @@
       font-size: 16px;
       line-height: 18px;
     }
+  }
+}
+
+.modal {
+  border: none ;
+  padding: 0;
+  background: #0c2a4d;
+  &_header{
+    width: 100%;
+    position: relative;
+  }
+  &_close_button {
+    outline: none;
+    position: absolute;
+    top: -100%;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 27px;
+    border: none;
+    padding: 8px 8px;
+    background: transparent;
+    color: #fff;
   }
 }

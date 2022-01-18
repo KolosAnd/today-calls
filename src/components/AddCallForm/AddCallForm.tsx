@@ -30,61 +30,70 @@ const schema = yup.object({
     time: yup.string().required('Обязательное поле').test('Некоректная дата', 'Некоректная дата', dateReg).typeError('Только дата'),
 }).required();
 
-const STATUS = {
-    HOVERED: 'hovered',
-    NORMAL: 'normal',
-};
-
-export const AddCallForm = ({addOneCall}) => {
+export const AddCallForm = ({addOneCall, typeForm, updatedCall, closePopup}) => {
     const [call,setCall] = useState(initialState);
-
-    const [status, setStatus] = useState(STATUS.NORMAL);
 
     const context:Record<string,any> = useContext(ContractContext);
     const calls = context.calls;
+    const updateCalls = context.updateCalls;
 
-    const defaultValues = {
-        resolver: yupResolver(schema)
-    }
-    const {register, formState: {errors}, handleSubmit, reset} = useForm(defaultValues);
+    const [typeFormMainPhrase, setTypeFormMainPhrase] = useState('Add');
+
+    const defaultValues = {resolver: yupResolver(schema)}
+
+    const {register, formState: {errors}, handleSubmit} = useForm(defaultValues);
 
     const addCall =  (data: any) => {
-
-        const form = new FormData();
-        form.append("name", data.name);
-        form.append("phone", data.phone);
-        form.append("time", data.time);
-
         const timeInMilisec:number = getTimeCall(call.time, Date.now());
         let newCall = {
-            id:  Date.now(),
+            id:  typeForm === 'update' ? updatedCall.id : Date.now(),
             milisec: timeInMilisec,
             phone: '00'+call.phone.replaceAll(/[\(\)\-\+\s]/g,'').replaceAll(/^(0{2})/g,'')
         }
-        setCall({ ...call, ...newCall});
+        newCall = { ...call, ...newCall};
 
+        if(typeForm === 'update') {
+            writeUpdateCall(newCall);
+        }
+        else {
+            writeAddCall(newCall);
+        }
     }
 
-    const onMouseEnter = () => {
-        setStatus(STATUS.HOVERED);
-    };
+    const writeAddCall = (new_call) => {
+        let finalArr = calls.concat([new_call]);
+        localStorage.setItem('list', JSON.stringify(finalArr));
+        addOneCall(new_call);
+        setCall(initialState);
+    }
 
-    const onMouseLeave = () => {
-        setStatus(STATUS.NORMAL);
-    };
+    const writeUpdateCall = (new_call) => {
+        calls.forEach((call) => {
+            if(call.id === new_call.id){
+                call.name = new_call.name;
+                call.time = new_call.time;
+                call.phone = new_call.phone;
+                call.milisec = new_call.milisec;
+            }
+        });
+        localStorage.setItem('list', JSON.stringify(calls));
+        updateCalls(calls);
+        setCall(initialState);
+        closePopup();
+    }
 
     useEffect( () => {
-        if(call.id){
-            let finalArr = calls.concat([call]);
-            localStorage.setItem('list', JSON.stringify(finalArr));
-            addOneCall(call);
-            setCall(initialState);
+        if(updatedCall) {
+            setTypeFormMainPhrase('Update');
+            setCall({
+                id: updatedCall.id,name: updatedCall.name,phone: updatedCall.phone,time: updatedCall.time,milisec: updatedCall.milisec
+            });
         }
-    },[call]);
+    }, [updatedCall]);
 
     return (
         <div className="add-call">
-            <Title text={"Add call"} />
+            <Title text={`${typeFormMainPhrase} call`} />
 
             <form onSubmit={handleSubmit(addCall)}>
                 <div className="add-call__inputs-wrap">
@@ -133,9 +142,7 @@ export const AddCallForm = ({addOneCall}) => {
                     </div>
                 </div>
                 <button type="submit"
-                        onMouseEnter={onMouseEnter}
-                        onMouseLeave={onMouseLeave}
-                        className={`button add-call__button ${status}`}>Add call</button>
+                        className={"button add-call__button"}>{typeFormMainPhrase} call</button>
             </form>
 
         </div>

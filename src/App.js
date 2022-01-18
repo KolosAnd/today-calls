@@ -32,6 +32,10 @@ function App() {
         setCalls(removeCalls);
     }
 
+    const updateCalls = (newArrCalls) => {
+        setCalls([...newArrCalls]);
+    }
+
     useEffect( () => {
         if(calls.length) {
             localStorage.setItem('list', JSON.stringify(calls));
@@ -45,7 +49,7 @@ function App() {
     });
 
     return (
-        <ContractContext.Provider value={{calls}}>
+        <ContractContext.Provider value={{calls,updateCalls}}>
             <div className="App">
                <Header />
                 <div className="container">
@@ -54,11 +58,9 @@ function App() {
                         <NextCall calls={calls}/>
 
                         <div className="calls-wrap">
-                            <AddCallForm addOneCall={addOneCall}/>
+                            <AddCallForm addOneCall={addOneCall} typeForm={'create'}/>
 
-                            <CallsList
-                                remove={removeCalls} calls={calls}
-                            />
+                            <CallsList remove={removeCalls} calls={calls}/>
                         </div>
 
                     </div>
